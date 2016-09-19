@@ -11,7 +11,7 @@ public class ApplicationTest {
 	public void shouldTest() {
 		int result = 1 + 1;
 
-		assertThat(result, equalTo(3));
+		assertThat(result, equalTo(2));
 	}
 
 }
