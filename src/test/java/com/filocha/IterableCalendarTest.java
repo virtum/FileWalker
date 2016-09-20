@@ -50,4 +50,13 @@ public class IterableCalendarTest {
 		assertThat(result, equalTo(expected));
 
 	}
+
+	@Test
+	public void shouldConvertIterableToStream() {
+		LocalDate date = LocalDate.of(2016, 9, 19);
+		IterableCalendar calendar = new IterableCalendar(date);
+
+		Iterator<LocalDate> iterator = calendar.iterator();
+		StreamUtils.asStream(iterator).limit(30).forEach(System.out::println);
+	}
 }
