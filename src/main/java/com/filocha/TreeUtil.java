@@ -9,7 +9,6 @@ public class TreeUtil {
 	}
 
 	static class LeafIterable implements Iterable<Leaf> {
-
 		private Branch root;
 
 		public LeafIterable(Branch root) {
@@ -24,7 +23,6 @@ public class TreeUtil {
 	}
 
 	static class LeafIterator implements Iterator<Leaf> {
-
 		private Leaf next;
 		private List<Leaf> currentLeafs;
 		private List<Branch> currentBranches;
@@ -36,32 +34,37 @@ public class TreeUtil {
 
 		@Override
 		public boolean hasNext() {
-			if (currentLeafs.isEmpty()) {
+			if (currentLeafs.isEmpty() && currentBranches.isEmpty()) {
 				return false;
+			}
+			if (currentLeafs.isEmpty() && !currentBranches.isEmpty()) {
+				Branch branch = currentBranches.get(0);
+				if (branch.getChildBranches().isEmpty()) {
+					getSubBranchLeafs(branch);
+					currentBranches.remove(branch);
+				} else {
+					getSubBranchLeafs(branch);
+				}
 			}
 			return true;
 		}
 
 		@Override
 		public Leaf next() {
-			if (!currentBranches.isEmpty()) {
-				checkIfSubBranchHasBranch(currentBranches);
-			}
-
 			// TODO change for queue
 			next = currentLeafs.get(0);
 			currentLeafs.remove(0);
+
 			return this.next;
 		}
 
-		private void checkIfSubBranchHasBranch(List<Branch> branches) {
-			// int numberOfBranches = branches.size();
-
-			for (Leaf leaf : branches.get(0).getChildLeafs()) {
+		private void getSubBranchLeafs(Branch branch) {
+			List<Leaf> leafs = branch.getChildLeafs();
+			for (Iterator<Leaf> iterator = leafs.iterator(); iterator.hasNext();) {
+				Leaf leaf = iterator.next();
 				addLeafsFromSubBranches(leaf);
+				iterator.remove();
 			}
-			currentBranches.remove(0);
-
 		}
 
 		private void addLeafsFromSubBranches(Leaf leaf) {

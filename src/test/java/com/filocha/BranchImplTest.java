@@ -4,14 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
-import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -63,10 +55,9 @@ public class BranchImplTest {
 		// when
 		Iterable<Leaf> result = TreeUtil.convert(branch);
 		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
 
 		// then
-
-		List<Leaf> leafs = Lists.newArrayList(iterator);
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1));
 	}
 
@@ -90,28 +81,44 @@ public class BranchImplTest {
 		// when
 		Iterable<Leaf> result = TreeUtil.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
 
 		// then
-		List<Leaf> leafs = Lists.newArrayList(iterator);
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3));
 
 	}
 
-	public List<String> getDirStructure() {
-		List<String> dirs = new ArrayList<>();
-		try {
-			Path startPath = Paths.get("c:/Temp");
-			Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
-				@Override
-				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-					dirs.add(dir.toString());
-					return FileVisitResult.CONTINUE;
-				}
-			});
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return dirs;
-	}
+	@Test
+	public void shouldReturnBranchWithFiveLeafsFromTwoSubBranches() {
+		// given
+		BranchImpl root = new BranchImpl();
+		Leaf leaf = new LeafImpl();
+		root.addChildLeaf(leaf);
 
+		Leaf leaf1 = new LeafImpl();
+		root.addChildLeaf(leaf1);
+
+		BranchImpl subBranch = new BranchImpl();
+		Leaf leaf2 = new LeafImpl();
+		subBranch.addChildLeaf(leaf2);
+
+		Leaf leaf3 = new LeafImpl();
+		subBranch.addChildLeaf(leaf3);
+
+		root.addChildBranch(subBranch);
+
+		BranchImpl subBranch1 = new BranchImpl();
+		Leaf leaf4 = new LeafImpl();
+		subBranch1.addChildLeaf(leaf4);
+
+		root.addChildBranch(subBranch1);
+
+		// when
+		Iterable<Leaf> result = TreeUtil.convert(root);
+		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		// then
+		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3, leaf4));
+	}
 }
