@@ -71,7 +71,7 @@ public class BranchImplTest {
 	}
 
 	@Test
-	public void shouldReturnBranchWithThreeLeafsOneInAnotherBranch() {
+	public void shouldReturnBranchWithFourLeafsOneInAnotherBranch() {
 		// given
 		BranchImpl root = new BranchImpl();
 		Leaf leaf = new LeafImpl();
@@ -82,7 +82,9 @@ public class BranchImplTest {
 
 		BranchImpl subBranch = new BranchImpl();
 		Leaf leaf2 = new LeafImpl();
+		Leaf leaf3 = new LeafImpl();
 		subBranch.addChildLeaf(leaf2);
+		subBranch.addChildLeaf(leaf3);
 		root.addChildBranch(subBranch);
 
 		// when
@@ -91,7 +93,7 @@ public class BranchImplTest {
 
 		// then
 		List<Leaf> leafs = Lists.newArrayList(iterator);
-		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2));
+		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3));
 
 	}
 
