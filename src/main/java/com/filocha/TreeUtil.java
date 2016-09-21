@@ -39,12 +39,13 @@ public class TreeUtil {
 			if (currentLeafs.isEmpty()) {
 				return false;
 			}
-			next = currentLeafs.get(0);
 			return true;
 		}
 
 		@Override
 		public Leaf next() {
+			next = currentLeafs.get(0);
+			currentLeafs.remove(0);
 			return this.next;
 		}
 	}

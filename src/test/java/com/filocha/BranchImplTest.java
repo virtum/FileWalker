@@ -47,7 +47,26 @@ public class BranchImplTest {
 		assertThat(iterator.next(), equalTo(leaf));
 	}
 
-	
+	@Test
+	public void shouldReturnBranchWithTwoLeafs() {
+		// given
+		BranchImpl branch = new BranchImpl();
+		Leaf leaf = new LeafImpl();
+		branch.addChildLeaf(leaf);
+
+		Leaf leaf1 = new LeafImpl();
+		branch.addChildLeaf(leaf1);
+
+		// when
+		Iterable<Leaf> result = TreeUtil.convert(branch);
+		Iterator<Leaf> iterator = result.iterator();
+
+		// then
+		assertThat(iterator.hasNext(), equalTo(true));
+		assertThat(iterator.next(), equalTo(leaf));
+		assertThat(iterator.next(), equalTo(leaf1));
+	}
+
 	public List<String> getDirStructure() {
 		List<String> dirs = new ArrayList<>();
 		try {
