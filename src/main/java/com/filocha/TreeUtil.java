@@ -44,20 +44,28 @@ public class TreeUtil {
 
 		@Override
 		public Leaf next() {
-			checkIfSubBranchHasBranch(currentBranches);
+			if (!currentBranches.isEmpty()) {
+				checkIfSubBranchHasBranch(currentBranches);
+			}
 
+			// TODO change for queue
 			next = currentLeafs.get(0);
 			currentLeafs.remove(0);
 			return this.next;
 		}
 
-		private void addLeafsFromSubBranches(Leaf leaf) {
-			currentLeafs.add(leaf);
+		private void checkIfSubBranchHasBranch(List<Branch> branches) {
+			// int numberOfBranches = branches.size();
+
+			for (Leaf leaf : branches.get(0).getChildLeafs()) {
+				addLeafsFromSubBranches(leaf);
+			}
+			currentBranches.remove(0);
+
 		}
 
-		private boolean checkIfSubBranchHasBranch(List<Branch> branches) {
-			// TODO add rest of the implementation
-			return false;
+		private void addLeafsFromSubBranches(Leaf leaf) {
+			currentLeafs.add(leaf);
 		}
 	}
 }

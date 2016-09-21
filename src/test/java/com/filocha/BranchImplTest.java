@@ -1,8 +1,8 @@
 package com.filocha;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -15,10 +15,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
 public class BranchImplTest {
@@ -72,7 +70,6 @@ public class BranchImplTest {
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1));
 	}
 
-	@Ignore
 	@Test
 	public void shouldReturnBranchWithThreeLeafsOneInAnotherBranch() {
 		// given
@@ -93,10 +90,9 @@ public class BranchImplTest {
 		Iterator<Leaf> iterator = result.iterator();
 
 		// then
-		assertThat(iterator.hasNext(), equalTo(true));
-		assertThat(iterator.next(), equalTo(leaf));
-		assertThat(iterator.next(), equalTo(leaf1));
-		assertThat(iterator.next(), equalTo(leaf2));
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2));
+
 	}
 
 	public List<String> getDirStructure() {
