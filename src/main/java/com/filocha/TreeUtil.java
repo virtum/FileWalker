@@ -40,10 +40,10 @@ public class TreeUtil {
 			if (currentLeafs.isEmpty() && !currentBranches.isEmpty()) {
 				Branch branch = currentBranches.get(0);
 				if (branch.getChildBranches().isEmpty()) {
-					getSubBranchLeafs(branch);
+					currentLeafs.addAll(branch.getChildLeafs());
 					currentBranches.remove(branch);
 				} else {
-					getSubBranchLeafs(branch);
+					currentLeafs.addAll(branch.getChildLeafs());
 				}
 			}
 			return true;
@@ -56,19 +56,6 @@ public class TreeUtil {
 			currentLeafs.remove(0);
 
 			return this.next;
-		}
-
-		private void getSubBranchLeafs(Branch branch) {
-			List<Leaf> leafs = branch.getChildLeafs();
-			for (Iterator<Leaf> iterator = leafs.iterator(); iterator.hasNext();) {
-				Leaf leaf = iterator.next();
-				addLeafsFromSubBranches(leaf);
-				iterator.remove();
-			}
-		}
-
-		private void addLeafsFromSubBranches(Leaf leaf) {
-			currentLeafs.add(leaf);
 		}
 	}
 }
