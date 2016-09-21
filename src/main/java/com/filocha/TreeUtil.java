@@ -44,9 +44,20 @@ public class TreeUtil {
 
 		@Override
 		public Leaf next() {
+			checkIfSubBranchHasBranch(currentBranches);
+
 			next = currentLeafs.get(0);
 			currentLeafs.remove(0);
 			return this.next;
+		}
+
+		private void addLeafsFromSubBranches(Leaf leaf) {
+			currentLeafs.add(leaf);
+		}
+
+		private boolean checkIfSubBranchHasBranch(List<Branch> branches) {
+			// TODO add rest of the implementation
+			return false;
 		}
 	}
 }
