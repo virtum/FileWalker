@@ -4,11 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
-import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
@@ -130,11 +128,13 @@ public class BranchImplTest {
 		BranchImpl root = new BranchImpl();
 		BranchImpl subBranch1 = new BranchImpl();
 		BranchImpl subBranch2 = new BranchImpl();
+		BranchImpl subBranch3 = new BranchImpl();
 
 		root.addChildBranch(subBranch1);
 		subBranch1.addChildBranch(subBranch2);
 		Leaf leaf = new LeafImpl();
 		subBranch2.addChildLeaf(leaf);
+		root.addChildBranch(subBranch3);
 
 		// when
 		Iterable<Leaf> result = TreeUtil.convert(root);
