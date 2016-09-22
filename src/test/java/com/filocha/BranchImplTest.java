@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
@@ -240,14 +241,11 @@ public class BranchImplTest {
 		BranchImpl subBranch2 = new BranchImpl();
 		subBranch1.addChildBranch(subBranch2);
 
-		Leaf leaf = new LeafImpl();
-		subBranch2.addChildLeaf(leaf);
-
 		Iterable<Leaf> result = TreeUtil.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
-		assertThat(leafs, containsInAnyOrder(leaf));
+		assertThat(leafs.isEmpty(), equalTo(true));
 	}
 
 }

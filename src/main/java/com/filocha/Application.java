@@ -12,7 +12,5 @@ public class Application {
 		// StreamUtils utils = new StreamUtils();
 		// utils.asStream(iterator)
 		// .forEach(it -> System.out.println(it.getName()));
-
 	}
-
 }
