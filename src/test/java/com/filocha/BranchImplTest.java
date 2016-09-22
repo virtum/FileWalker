@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
@@ -141,5 +142,38 @@ public class BranchImplTest {
 
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf));
+	}
+
+	@Test
+	public void shouldFindLeafsInSubBranches() {
+		// given
+		BranchImpl root = new BranchImpl();
+		Leaf leaf = new LeafImpl();
+		root.addChildLeaf(leaf);
+
+		BranchImpl subBranch1 = new BranchImpl();
+		BranchImpl subBranch2 = new BranchImpl();
+		BranchImpl subBranch3 = new BranchImpl();
+
+		root.addChildBranch(subBranch1);
+		root.addChildBranch(subBranch2);
+		root.addChildBranch(subBranch3);
+
+		Leaf leaf1 = new LeafImpl();
+		subBranch1.addChildLeaf(leaf1);
+
+		Leaf leaf2 = new LeafImpl();
+		subBranch2.addChildLeaf(leaf2);
+
+		Leaf leaf3 = new LeafImpl();
+		subBranch3.addChildLeaf(leaf3);
+
+		// when
+		Iterable<Leaf> result = TreeUtil.convert(root);
+		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		// then
+		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3));
 	}
 }

@@ -1,5 +1,7 @@
 package com.filocha;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,31 +49,41 @@ public class TreeUtil {
 						currentBranches.remove(branch);
 					} else {
 						currentLeafs.addAll(leafs);
+						leafs.clear();
 					}
 				} else {
-					return getLeafsFromSubBranches(branch);
+					List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
+					if (subLeafs.isEmpty()) {
+						return false;
+					}
+					currentLeafs.addAll(subLeafs);
 				}
 			}
 			return true;
 		}
 
-		public boolean getLeafsFromSubBranches(Branch branch) {
-			if (currentLeafs.isEmpty()) {
-				List<Branch> branches = branch.getChildBranches();
-				for (Branch subBranch : branches) {
-					if (subBranch.getChildLeafs().isEmpty()) {
-						if (subBranch.getChildBranches().isEmpty()) {
-							return false;
-						}
-						getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
-					} else {
-						currentLeafs.addAll(subBranch.getChildLeafs());
-						subBranch.getChildLeafs().clear();
-						return true;
+		private List<Leaf> getLeafsFromSubBranches(Branch branch) {
+			if (!currentLeafs.isEmpty()) {
+				return Collections.emptyList();
+			}
+
+			List<Leaf> result = new ArrayList<>();
+
+			List<Branch> branches = branch.getChildBranches();
+			for (Branch subBranch : branches) {
+				if (subBranch.getChildLeafs().isEmpty()) {
+					if (subBranch.getChildBranches().isEmpty()) {
+						return result;
 					}
+					getLeafsFromSubBranches(
+							subBranch.getChildBranches().get(0));
+				} else {
+					result.addAll(subBranch.getChildLeafs());
+					subBranch.getChildLeafs().clear();
+					return result;
 				}
 			}
-			return false;
+			return result;
 		}
 
 		@Override
