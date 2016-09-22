@@ -66,10 +66,6 @@ public class TreeUtil {
 		}
 
 		private List<Leaf> getLeafsFromSubBranches(Branch branch) {
-			if (!currentLeafs.isEmpty()) {
-				return Collections.emptyList();
-			}
-
 			List<Leaf> result = new ArrayList<>();
 
 			List<Branch> branches = branch.getChildBranches();
@@ -91,7 +87,6 @@ public class TreeUtil {
 
 		@Override
 		public Leaf next() {
-			// TODO change for queue
 			next = currentLeafs.poll();
 			currentLeafs.remove(0);
 

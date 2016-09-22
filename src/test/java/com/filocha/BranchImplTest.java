@@ -172,6 +172,21 @@ public class BranchImplTest {
 	}
 
 	@Test
+	public void shouldReturnEmptyListIfSubBranchDoNotHaveLeafs() {
+		BranchImpl root = new BranchImpl();
+
+		BranchImpl subBranch1 = new BranchImpl();
+		root.addChildBranch(subBranch1);
+
+		Iterable<Leaf> result = TreeUtil.convert(root);
+		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		assertThat(leafs.isEmpty(), equalTo(true));
+
+	}
+
+	@Test
 	public void shouldFindLeafsInSubBranches() {
 		// given
 		BranchImpl root = new BranchImpl();
