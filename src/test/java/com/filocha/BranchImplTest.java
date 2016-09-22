@@ -220,6 +220,9 @@ public class BranchImplTest {
 		BranchImpl subBranch2 = new BranchImpl();
 		subBranch1.addChildBranch(subBranch2);
 
+		BranchImpl subBranch3 = new BranchImpl();
+		subBranch2.addChildBranch(subBranch3);
+
 		Iterable<Leaf> result = TreeUtil.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
