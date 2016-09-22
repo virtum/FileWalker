@@ -57,6 +57,7 @@ public class IterableCalendarTest {
 		IterableCalendar calendar = new IterableCalendar(date);
 
 		Iterator<LocalDate> iterator = calendar.iterator();
-		StreamUtils.asStream(iterator).limit(30).forEach(System.out::println);
+		StreamUtils utils = new StreamUtils();
+		utils.asStream(iterator).limit(30).forEach(System.out::println);
 	}
 }
