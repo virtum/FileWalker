@@ -39,14 +39,39 @@ public class TreeUtil {
 			}
 			if (currentLeafs.isEmpty() && !currentBranches.isEmpty()) {
 				Branch branch = currentBranches.get(0);
-				if (branch.getChildBranches().isEmpty()) {
-					currentLeafs.addAll(branch.getChildLeafs());
-					currentBranches.remove(branch);
+				List<Leaf> leafs = branch.getChildLeafs();
+
+				if (!leafs.isEmpty()) {
+					if (branch.getChildBranches().isEmpty()) {
+						currentLeafs.addAll(leafs);
+						currentBranches.remove(branch);
+					} else {
+						currentLeafs.addAll(leafs);
+					}
 				} else {
-					currentLeafs.addAll(branch.getChildLeafs());
+					return getLeafsFromSubBranches(branch);
 				}
 			}
 			return true;
+		}
+
+		public boolean getLeafsFromSubBranches(Branch branch) {
+			if (currentLeafs.isEmpty()) {
+				List<Branch> branches = branch.getChildBranches();
+				for (Branch subBranch : branches) {
+					if (subBranch.getChildLeafs().isEmpty()) {
+						if (subBranch.getChildBranches().isEmpty()) {
+							return false;
+						}
+						getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
+					} else {
+						currentLeafs.addAll(subBranch.getChildLeafs());
+						subBranch.getChildLeafs().clear();
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 
 		@Override
