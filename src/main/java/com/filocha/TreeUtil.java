@@ -3,7 +3,9 @@ package com.filocha;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class TreeUtil {
 	public static Iterable<Leaf> convert(Branch root) {
@@ -26,12 +28,12 @@ public class TreeUtil {
 
 	static class LeafIterator implements Iterator<Leaf> {
 		private Leaf next;
-		private List<Leaf> currentLeafs;
-		private List<Branch> currentBranches;
+		private Queue<Leaf> currentLeafs;
+		private Queue<Branch> currentBranches;
 
 		public LeafIterator(Branch branch) {
-			this.currentLeafs = branch.getChildLeafs();
-			this.currentBranches = branch.getChildBranches();
+			this.currentLeafs = new LinkedList<>(branch.getChildLeafs());
+			this.currentBranches = new LinkedList<>(branch.getChildBranches());
 		}
 
 		@Override
@@ -40,8 +42,8 @@ public class TreeUtil {
 				return false;
 			}
 			if (currentLeafs.isEmpty() && !currentBranches.isEmpty()) {
-				Branch branch = currentBranches.get(0);
-				List<Leaf> leafs = branch.getChildLeafs();
+				Branch branch = currentBranches.poll();
+				Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
 
 				if (!leafs.isEmpty()) {
 					if (branch.getChildBranches().isEmpty()) {
@@ -50,6 +52,7 @@ public class TreeUtil {
 					} else {
 						currentLeafs.addAll(leafs);
 						leafs.clear();
+						currentBranches.addAll(branch.getChildBranches());
 					}
 				} else {
 					List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
@@ -89,7 +92,7 @@ public class TreeUtil {
 		@Override
 		public Leaf next() {
 			// TODO change for queue
-			next = currentLeafs.get(0);
+			next = currentLeafs.poll();
 			currentLeafs.remove(0);
 
 			return this.next;

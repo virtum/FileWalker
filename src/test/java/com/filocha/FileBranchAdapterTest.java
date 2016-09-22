@@ -1,16 +1,44 @@
 package com.filocha;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.Test;
 
 public class FileBranchAdapterTest {
 
 	@Test
-	public void shouldFindSubBranches() {
-		// temp, tworze folder o unikatowym id
-		// w nim 2 podfoldery 3 pliki ten sam lvl
-		// nowa instacja fileBranchAdapter podaje folder, sprawdzam czy zwroci 2
-		// foldery jako getBranches i 3 leafy
-		// wyjeb folder tymczasowy
+	public void shouldFindSubBranches() throws IOException {
+		String root = "c:/temp/1/";
+		File rootFile = new File(root);
+		rootFile.mkdirs();
+
+		String subBranch1 = UUID.randomUUID().toString().substring(28);
+		new File(root + subBranch1).mkdirs();
+
+		String subBranch2 = UUID.randomUUID().toString().substring(28);
+		new File(root + subBranch2).mkdirs();
+
+		new File(root + "1.txt").createNewFile();
+		new File(root + "2.txt").createNewFile();
+		new File(root + "3.txt").createNewFile();
+
+		FileBranchAdapter adapter = new FileBranchAdapter(rootFile);
+		List<Branch> branches = adapter.getChildBranches();
+		List<Leaf> leafs = adapter.getChildLeafs();
+
+		rootFile.delete();
+
+		assertThat(branches.size(), equalTo(2));
+		assertThat(leafs.size(), equalTo(3));
+
+		FileUtils.deleteDirectory(rootFile);
 	}
 
 }
