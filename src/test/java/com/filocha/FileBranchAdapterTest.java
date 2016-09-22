@@ -15,7 +15,7 @@ public class FileBranchAdapterTest {
 
 	@Test
 	public void shouldFindSubBranches() throws IOException {
-		String root = "c:/temp/1/";
+		String root = "c:/temp/3/";
 		File rootFile = new File(root);
 		rootFile.mkdirs();
 

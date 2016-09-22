@@ -11,7 +11,6 @@ public class Application {
 
 	public static void main(String[] args) {
 
-
 		FileBranchAdapter root = new FileBranchAdapter(new File("c:/Temp/"));
 
 		Iterable<Leaf> items = TreeUtil.convert(root);
@@ -22,21 +21,4 @@ public class Application {
 
 	}
 
-	// public List<String> getDirStructure() {
-	// List<String> dirs = new ArrayList<>();
-	// try {
-	// Path startPath = Paths.get("c:/Temp");
-	// Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
-	// @Override
-	// public FileVisitResult preVisitDirectory(Path dir,
-	// BasicFileAttributes attrs) {
-	// dirs.add(dir.toString());
-	// return FileVisitResult.CONTINUE;
-	// }
-	// });
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// return dirs;
-	// }
 }

@@ -171,7 +171,6 @@ public class BranchImplTest {
 
 	}
 
-	@Ignore
 	@Test
 	public void shouldFindLeafsInSubBranches() {
 		// given
@@ -180,21 +179,28 @@ public class BranchImplTest {
 		root.addChildLeaf(leaf);
 
 		BranchImpl subBranch1 = new BranchImpl();
-		BranchImpl subBranch2 = new BranchImpl();
-		BranchImpl subBranch3 = new BranchImpl();
-
 		root.addChildBranch(subBranch1);
-		root.addChildBranch(subBranch2);
 
 		Leaf leaf1 = new LeafImpl();
 		subBranch1.addChildLeaf(leaf1);
 
+		BranchImpl subBranch2 = new BranchImpl();
+		subBranch1.addChildBranch(subBranch2);
+
 		Leaf leaf2 = new LeafImpl();
 		subBranch2.addChildLeaf(leaf2);
 
+		BranchImpl subBranch3 = new BranchImpl();
+		root.addChildBranch(subBranch3);
+
 		Leaf leaf3 = new LeafImpl();
 		subBranch3.addChildLeaf(leaf3);
-		subBranch1.addChildBranch(subBranch3);
+
+		BranchImpl subBranch4 = new BranchImpl();
+		subBranch3.addChildBranch(subBranch4);
+
+		Leaf leaf4 = new LeafImpl();
+		subBranch4.addChildLeaf(leaf4);
 
 		// when
 		Iterable<Leaf> result = TreeUtil.convert(root);
@@ -202,6 +208,6 @@ public class BranchImplTest {
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
 		// then
-		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3));
+		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3, leaf4));
 	}
 }
