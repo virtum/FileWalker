@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class TreeUtil {
-	public static Iterable<Leaf> convert(Branch root) {
+	public Iterable<Leaf> convert(Branch root) {
 		return new LeafIterable(root);
 	}
 

@@ -18,7 +18,8 @@ public class BranchImplTest {
 		BranchImpl branch = new BranchImpl();
 
 		// when
-		Iterable<Leaf> result = TreeUtil.convert(branch);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(branch);
 		Iterator<Leaf> iterator = result.iterator();
 
 		// then
@@ -33,7 +34,8 @@ public class BranchImplTest {
 		branch.addChildLeaf(leaf);
 
 		// when
-		Iterable<Leaf> result = TreeUtil.convert(branch);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(branch);
 		Iterator<Leaf> iterator = result.iterator();
 
 		// then
@@ -52,7 +54,8 @@ public class BranchImplTest {
 		branch.addChildLeaf(leaf1);
 
 		// when
-		Iterable<Leaf> result = TreeUtil.convert(branch);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(branch);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
@@ -78,7 +81,8 @@ public class BranchImplTest {
 		root.addChildBranch(subBranch);
 
 		// when
-		Iterable<Leaf> result = TreeUtil.convert(root);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
@@ -113,7 +117,8 @@ public class BranchImplTest {
 		root.addChildBranch(subBranch1);
 
 		// when
-		Iterable<Leaf> result = TreeUtil.convert(root);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
@@ -136,7 +141,8 @@ public class BranchImplTest {
 		root.addChildBranch(subBranch3);
 
 		// when
-		Iterable<Leaf> result = TreeUtil.convert(root);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
@@ -162,7 +168,8 @@ public class BranchImplTest {
 		Leaf leaf2 = new LeafImpl();
 		subBranch2.addChildLeaf(leaf2);
 
-		Iterable<Leaf> result = TreeUtil.convert(root);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
@@ -202,7 +209,8 @@ public class BranchImplTest {
 		subBranch4.addChildLeaf(leaf4);
 
 		// when
-		Iterable<Leaf> result = TreeUtil.convert(root);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
@@ -223,7 +231,8 @@ public class BranchImplTest {
 		BranchImpl subBranch3 = new BranchImpl();
 		subBranch2.addChildBranch(subBranch3);
 
-		Iterable<Leaf> result = TreeUtil.convert(root);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
@@ -240,7 +249,8 @@ public class BranchImplTest {
 		BranchImpl subBranch2 = new BranchImpl();
 		subBranch1.addChildBranch(subBranch2);
 
-		Iterable<Leaf> result = TreeUtil.convert(root);
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
 		Iterator<Leaf> iterator = result.iterator();
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
