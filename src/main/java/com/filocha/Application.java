@@ -4,12 +4,14 @@ public class Application {
 
 	public static void main(String[] args) {
 
-		// FileBranchAdapter root = new FileBranchAdapter(new File("c:/Temp/"));
+		// FileBranchAdapter root = new FileBranchAdapter(new
+		// File("c:/Windows/"));
 		//
 		// Iterable<Leaf> items = TreeUtil.convert(root);
 		// Iterator<Leaf> iterator = items.iterator();
 		//
-		// StreamUtils.asStream(iterator)
+		// StreamUtils utils = new StreamUtils();
+		// utils.asStream(iterator)
 		// .forEach(it -> System.out.println(it.getName()));
 
 	}
