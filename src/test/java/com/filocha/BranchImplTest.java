@@ -12,7 +12,6 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 
 public class BranchImplTest {
-
 	@Test
 	public void shouldReturnEmptyIterator() {
 		// given
@@ -172,21 +171,6 @@ public class BranchImplTest {
 	}
 
 	@Test
-	public void shouldReturnEmptyListIfSubBranchDoNotHaveLeafs() {
-		BranchImpl root = new BranchImpl();
-
-		BranchImpl subBranch1 = new BranchImpl();
-		root.addChildBranch(subBranch1);
-
-		Iterable<Leaf> result = TreeUtil.convert(root);
-		Iterator<Leaf> iterator = result.iterator();
-		List<Leaf> leafs = Lists.newArrayList(iterator);
-
-		assertThat(leafs.isEmpty(), equalTo(true));
-
-	}
-
-	@Test
 	public void shouldFindLeafsInSubBranches() {
 		// given
 		BranchImpl root = new BranchImpl();
@@ -225,4 +209,42 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3, leaf4));
 	}
+
+	@Test
+	public void shouldReturnEmptyListIfSubBranchDoNotHaveLeafs() {
+		BranchImpl root = new BranchImpl();
+
+		BranchImpl subBranch1 = new BranchImpl();
+		root.addChildBranch(subBranch1);
+
+		BranchImpl subBranch2 = new BranchImpl();
+		subBranch1.addChildBranch(subBranch2);
+
+		Iterable<Leaf> result = TreeUtil.convert(root);
+		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		assertThat(leafs.isEmpty(), equalTo(true));
+	}
+
+	@Test
+	public void shouldLeafFromSubBranchIfBranchDoNotHaveLeafs() {
+		BranchImpl root = new BranchImpl();
+
+		BranchImpl subBranch1 = new BranchImpl();
+		root.addChildBranch(subBranch1);
+
+		BranchImpl subBranch2 = new BranchImpl();
+		subBranch1.addChildBranch(subBranch2);
+
+		Leaf leaf = new LeafImpl();
+		subBranch2.addChildLeaf(leaf);
+
+		Iterable<Leaf> result = TreeUtil.convert(root);
+		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		assertThat(leafs, containsInAnyOrder(leaf));
+	}
+
 }
