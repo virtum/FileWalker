@@ -35,6 +35,7 @@ public class FileBranchAdapterTest {
 
 		rootFile.delete();
 
+		assertThat(leafs.get(0).getName(), equalTo("1.txt"));
 		assertThat(branches.size(), equalTo(2));
 		assertThat(leafs.size(), equalTo(3));
 
