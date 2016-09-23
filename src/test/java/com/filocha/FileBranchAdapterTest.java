@@ -15,7 +15,8 @@ public class FileBranchAdapterTest {
 
 	@Test
 	public void shouldFindSubBranches() throws IOException {
-		String root = "c:/temp/3/";
+		String home = System.getenv("HOME");
+		String root = home + "temp1/";
 		File rootFile = new File(root);
 		rootFile.mkdirs();
 
@@ -32,8 +33,6 @@ public class FileBranchAdapterTest {
 		FileBranchAdapter adapter = new FileBranchAdapter(rootFile);
 		List<Branch> branches = adapter.getChildBranches();
 		List<Leaf> leafs = adapter.getChildLeafs();
-
-		rootFile.delete();
 
 		assertThat(leafs.get(0).getName(), equalTo("1.txt"));
 		assertThat(branches.size(), equalTo(2));
