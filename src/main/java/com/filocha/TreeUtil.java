@@ -40,25 +40,28 @@ public class TreeUtil {
 			if (currentLeafs.isEmpty() && currentBranches.isEmpty()) {
 				return false;
 			}
-			if (currentLeafs.isEmpty() && !currentBranches.isEmpty()) {
-				Branch branch = currentBranches.poll();
-				Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
+			if (!currentBranches.isEmpty()) {
+				if (currentLeafs.isEmpty()) {
+					Branch branch = currentBranches.poll();
+					Queue<Leaf> leafs = new LinkedList<>(
+							branch.getChildLeafs());
 
-				if (!leafs.isEmpty()) {
-					if (branch.getChildBranches().isEmpty()) {
-						currentLeafs.addAll(leafs);
-						currentBranches.remove(branch);
+					if (!leafs.isEmpty()) {
+						if (branch.getChildBranches().isEmpty()) {
+							currentLeafs.addAll(leafs);
+							currentBranches.remove(branch);
+						} else {
+							currentLeafs.addAll(leafs);
+							leafs.clear();
+							currentBranches.addAll(branch.getChildBranches());
+						}
 					} else {
-						currentLeafs.addAll(leafs);
-						leafs.clear();
-						currentBranches.addAll(branch.getChildBranches());
+						List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
+						if (subLeafs.isEmpty()) {
+							return false;
+						}
+						currentLeafs.addAll(subLeafs);
 					}
-				} else {
-					List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
-					if (subLeafs.isEmpty()) {
-						return false;
-					}
-					currentLeafs.addAll(subLeafs);
 				}
 			}
 			return true;
