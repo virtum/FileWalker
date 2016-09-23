@@ -15,8 +15,9 @@ public class FileBranchAdapterTest {
 
 	@Test
 	public void shouldFindSubBranches() throws IOException {
-		String home = System.getenv("HOME");
-		String root = home + "temp/3/";
+		// String home = System.getenv("HOME");
+		// String root = home + "temp/3/";
+		String root = "c:/temp/3/";
 		File rootFile = new File(root);
 		rootFile.mkdirs();
 
