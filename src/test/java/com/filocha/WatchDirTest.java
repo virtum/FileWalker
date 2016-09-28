@@ -19,11 +19,11 @@ public class WatchDirTest {
 	@Test
 	public void shouldReceiveChangesInFolders() throws IOException {
 		String home = System.getProperty("user.home");
-		File temp = new File(home + "\\Temp");
+		File temp = new File(home + "/Temp");
 		temp.mkdir();
 
 		String randomName = UUID.randomUUID().toString().substring(28);
-		String root = temp + "\\" + randomName + "\\";
+		String root = temp + "/" + randomName + "/";
 
 		boolean recursive = true;
 		Path dir = Paths.get(temp.getAbsolutePath());
