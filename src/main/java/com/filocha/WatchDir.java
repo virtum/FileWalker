@@ -106,7 +106,13 @@ public class WatchDir {
 
 	public void initialize() {
 		Executors.newSingleThreadExecutor().submit(() -> {
-			watch();
+			while (true) {
+				Path path = watch();
+
+				for (Subscriber<? super Path> item : observers) {
+					item.onNext(path);
+				}
+			}
 		});
 	}
 
@@ -141,10 +147,6 @@ public class WatchDir {
 			WatchEvent<Path> ev = cast(event);
 			Path name = ev.context();
 			child = dir.resolve(name);
-
-			for (Subscriber<? super Path> item : observers) {
-				item.onNext(child);
-			}
 
 			// print out event
 			System.out.format("%s: %s\n", event.kind().name(), child);
