@@ -77,17 +77,9 @@ public class WatchDir {
 			this.watcher = FileSystems.getDefault().newWatchService();
 			this.keys = new HashMap<WatchKey, Path>();
 			this.recursive = recursive;
-			if (recursive) {
-				System.out.format("Scanning %s ...\n", dir);
 
-				registerAll(dir);
-
-				System.out.println("Done.");
-			} else {
-				register(dir);
-			}
+			registerAll(dir);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -100,7 +92,6 @@ public class WatchDir {
 		Observable<Path> myObservable = Observable.create(sub -> {
 			observers.add(sub);
 		});
-
 		return myObservable;
 	}
 
@@ -126,30 +117,18 @@ public class WatchDir {
 		try {
 			key = watcher.take();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		Path dir = keys.get(key);
-		if (dir == null) {
-			System.err.println("WatchKey not recognized!!");
-		}
 
 		for (WatchEvent<?> event : key.pollEvents()) {
 			WatchEvent.Kind kind = event.kind();
-
-			// TBD - provide example of how OVERFLOW event is handled
-			if (kind == OVERFLOW) {
-				continue;
-			}
 
 			// Context for directory entry event is the file name of entry
 			WatchEvent<Path> ev = cast(event);
 			Path name = ev.context();
 			child = dir.resolve(name);
-
-			// print out event
-			System.out.format("%s: %s\n", event.kind().name(), child);
 
 			// if directory is created, and watching recursively, then
 			// register it and its sub-directories
