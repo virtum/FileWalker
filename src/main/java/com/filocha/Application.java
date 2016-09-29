@@ -12,26 +12,6 @@ public class Application {
 		// startSingleObserver();
 		SpringApplication.run(Application.class, args);
 
-		// FileBranchAdapter root = new FileBranchAdapter(new File("c:/Temp/"));
-		//
-		// TreeUtil util = new TreeUtil();
-		// Iterable<Leaf> items = util.convert(root);
-		// // Iterator<Leaf> iterator = items.iterator();
-		// //
-		// // StreamUtils utils = new StreamUtils();
-		// // Stream<Leaf> stream = utils.asStream(iterator);
-		//
-		// Observable<Leaf> observable = Observable.from(items);
-		//
-		// Action1<Leaf> observer1 = s -> {
-		// System.out.println("Observer1 received: " + s.getName());
-		// };
-		//
-		// observable.subscribe(observer1);
-		//
-		// while (true) {
-		//
-		// }
 	}
 
 	// public static void startSingleObserver() throws IOException {

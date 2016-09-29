@@ -17,6 +17,7 @@ function connect() {
 	stompClient.connect({}, function(frame) {
 		setConnected(true);
 		console.log('Connected: ' + frame);
+		sendName();
 		stompClient.subscribe('/topic/greetings', function(greeting) {
 			showGreeting(greeting.body);
 		});
@@ -31,6 +32,9 @@ function disconnect() {
 	console.log("Disconnected");
 }
 
+function sendName() {
+	stompClient.send("/app/hello");
+}
 
 function showGreeting(message) {
 	$("#greetings").append("<tr><td>" + message + "</td></tr>");
