@@ -48,16 +48,5 @@ public class IterableCalendarTest {
 
 		LocalDate expected = LocalDate.of(2016, 9, 20);
 		assertThat(result, equalTo(expected));
-
-	}
-
-	@Test
-	public void shouldConvertIterableToStream() {
-		LocalDate date = LocalDate.of(2016, 9, 19);
-		IterableCalendar calendar = new IterableCalendar(date);
-
-		Iterator<LocalDate> iterator = calendar.iterator();
-		StreamUtils utils = new StreamUtils();
-		utils.asStream(iterator).limit(30).forEach(System.out::println);
 	}
 }
