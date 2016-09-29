@@ -1,4 +1,4 @@
-package com.filocha;
+package com.filocha.dirWatcher;
 
 public interface Leaf {
 	String getName();

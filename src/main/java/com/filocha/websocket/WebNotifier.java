@@ -1,4 +1,4 @@
-package com.filocha;
+package com.filocha.websocket;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -10,6 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.filocha.dirWatcher.FileBranchAdapter;
+import com.filocha.dirWatcher.Leaf;
+import com.filocha.dirWatcher.TreeUtil;
+import com.filocha.dirWatcher.WatchDir;
 
 import rx.Observable;
 import rx.functions.Action1;

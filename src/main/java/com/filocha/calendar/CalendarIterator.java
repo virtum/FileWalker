@@ -1,4 +1,4 @@
-package com.filocha;
+package com.filocha.calendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

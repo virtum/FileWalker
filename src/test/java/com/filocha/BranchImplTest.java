@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.filocha.dirWatcher.Leaf;
+import com.filocha.dirWatcher.TreeUtil;
 import com.google.common.collect.Lists;
 
 public class BranchImplTest {

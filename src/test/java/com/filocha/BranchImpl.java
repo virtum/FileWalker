@@ -3,6 +3,9 @@ package com.filocha;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.filocha.dirWatcher.Branch;
+import com.filocha.dirWatcher.Leaf;
+
 public class BranchImpl implements Branch {
 
 	private List<Branch> childBranches = new ArrayList<>();

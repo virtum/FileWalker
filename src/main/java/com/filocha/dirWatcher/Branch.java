@@ -1,4 +1,4 @@
-package com.filocha;
+package com.filocha.dirWatcher;
 
 import java.util.List;
 

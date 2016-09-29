@@ -11,6 +11,10 @@ import java.util.UUID;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.Test;
 
+import com.filocha.dirWatcher.Branch;
+import com.filocha.dirWatcher.FileBranchAdapter;
+import com.filocha.dirWatcher.Leaf;
+
 public class FileBranchAdapterTest {
 
 	@Test

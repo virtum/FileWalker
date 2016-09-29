@@ -1,4 +1,4 @@
-package com.filocha;
+package com.filocha.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

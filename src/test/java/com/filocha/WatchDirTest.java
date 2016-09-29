@@ -12,6 +12,8 @@ import java.util.UUID;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.Test;
 
+import com.filocha.dirWatcher.WatchDir;
+
 import rx.subjects.ReplaySubject;
 
 public class WatchDirTest {

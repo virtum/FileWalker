@@ -8,6 +8,8 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
+import com.filocha.calendar.IterableCalendar;
+
 public class IterableCalendarTest {
 
 	@Test
