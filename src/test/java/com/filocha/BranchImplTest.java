@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.filocha.dirWatcher.Leaf;
@@ -14,6 +15,7 @@ import com.filocha.dirWatcher.TreeUtil;
 import com.google.common.collect.Lists;
 
 public class BranchImplTest {
+
 	@Test
 	public void shouldReturnEmptyIterator() {
 		// given
@@ -44,7 +46,6 @@ public class BranchImplTest {
 		assertThat(iterator.hasNext(), equalTo(true));
 		assertThat(iterator.next(), equalTo(leaf));
 	}
-
 	@Test
 	public void shouldReturnBranchWithTwoLeafs() {
 		// given
@@ -64,7 +65,6 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1));
 	}
-
 	@Test
 	public void shouldReturnBranchWithFourLeafsOneInAnotherBranch() {
 		// given
@@ -92,7 +92,6 @@ public class BranchImplTest {
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3));
 
 	}
-
 	@Test
 	public void shouldReturnBranchWithFiveLeafsFromTwoSubBranches() {
 		// given
@@ -127,7 +126,6 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3, leaf4));
 	}
-
 	@Test
 	public void shouldFindLeafsInBranches() {
 		// given
@@ -151,7 +149,6 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf));
 	}
-
 	@Test
 	public void shouldFindLeafsInOneSubBranchesBranch() {
 		BranchImpl root = new BranchImpl();
@@ -178,7 +175,6 @@ public class BranchImplTest {
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2));
 
 	}
-
 	@Test
 	public void shouldFindLeafsInSubBranches() {
 		// given
@@ -219,7 +215,6 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3, leaf4));
 	}
-
 	@Test
 	public void shouldReturnEmptyListIfSubBranchDoNotHaveLeafs() {
 		BranchImpl root = new BranchImpl();
@@ -240,7 +235,6 @@ public class BranchImplTest {
 
 		assertThat(leafs.isEmpty(), equalTo(true));
 	}
-
 	@Test
 	public void shouldLeafFromSubBranchIfBranchDoNotHaveLeafs() {
 		BranchImpl root = new BranchImpl();
@@ -257,6 +251,43 @@ public class BranchImplTest {
 		List<Leaf> leafs = Lists.newArrayList(iterator);
 
 		assertThat(leafs.isEmpty(), equalTo(true));
+	}
+	@Test
+	public void shouldFindFilesInSubBranches() {
+		BranchImpl root = new BranchImpl();
+
+		BranchImpl subBranch1 = new BranchImpl();
+		root.addChildBranch(subBranch1);
+
+		Leaf leaf11 = new LeafImpl();
+		subBranch1.addChildLeaf(leaf11);
+
+		BranchImpl subBranch11 = new BranchImpl();
+		subBranch1.addChildBranch(subBranch11);
+
+		Leaf leaf111 = new LeafImpl();
+		subBranch11.addChildLeaf(leaf111);
+
+		BranchImpl subBranch111 = new BranchImpl();
+		subBranch11.addChildBranch(subBranch111);
+
+		Leaf leaf1111 = new LeafImpl();
+		subBranch111.addChildLeaf(leaf1111);
+
+		BranchImpl subBranch2 = new BranchImpl();
+		root.addChildBranch(subBranch2);
+
+		Leaf leaf2 = new LeafImpl();
+		subBranch2.addChildLeaf(leaf2);
+
+		// when
+		TreeUtil util = new TreeUtil();
+		Iterable<Leaf> result = util.convert(root);
+		Iterator<Leaf> iterator = result.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		// then
+		assertThat(leafs.size(), equalTo(4));
 	}
 
 }

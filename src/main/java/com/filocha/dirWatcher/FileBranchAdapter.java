@@ -21,8 +21,7 @@ public final class FileBranchAdapter implements Branch, Leaf {
 
 	@Override
 	public List<Leaf> getChildLeafs() {
-		return Stream.of(adapted.listFiles())
-				.map(it -> new FileLeafAdapter(it))
+		return Stream.of(adapted.listFiles()).map(it -> new FileLeafAdapter(it))
 				.collect(Collectors.toList());
 	}
 

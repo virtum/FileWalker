@@ -39,10 +39,16 @@ public class WebNotifier {
 
 	@MessageMapping("/hello")
 	public void notifyWithFullFolderStructure() {
-		FileBranchAdapter root = new FileBranchAdapter(new File("c:/Temp/"));
+		String home = System.getProperty("user.home");
+		String rootDir = home + "/walker/";
+		FileBranchAdapter root = new FileBranchAdapter(new File(rootDir));
 
 		TreeUtil util = new TreeUtil();
 		Iterable<Leaf> items = util.convert(root);
+
+		for (Leaf leaf : items) {
+			System.out.println(leaf.getName());
+		}
 
 		Observable<Leaf> observable = Observable.from(items);
 

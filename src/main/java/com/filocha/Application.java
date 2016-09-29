@@ -11,6 +11,7 @@ public class Application {
 	public static void main(String[] args) throws IOException {
 		// startSingleObserver();
 		SpringApplication.run(Application.class, args);
+
 	}
 
 	// public static void startSingleObserver() throws IOException {
@@ -25,7 +26,7 @@ public class Application {
 	// };
 	//
 	// Action1<Path> observer2 = s -> {
-	// System.out.println("Observer2 received: " + s.getFileName());
+	// System.out.printl65n("Observer2 received: " + s.getFileName());
 	// };
 	//
 	// myObservable.observeOn(Schedulers.computation()).subscribe(observer1);

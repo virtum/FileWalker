@@ -27,8 +27,8 @@ public class TreeUtil {
 
 	static class LeafIterator implements Iterator<Leaf> {
 		private Leaf next;
-		private Queue<Leaf> currentLeafs;
-		private Queue<Branch> currentBranches;
+		private LinkedList<Leaf> currentLeafs;
+		private LinkedList<Branch> currentBranches;
 
 		public LeafIterator(Branch branch) {
 			this.currentLeafs = new LinkedList<>(branch.getChildLeafs());
@@ -53,7 +53,8 @@ public class TreeUtil {
 						} else {
 							currentLeafs.addAll(leafs);
 							leafs.clear();
-							currentBranches.addAll(branch.getChildBranches());
+							currentBranches.addAll(0,
+									branch.getChildBranches());
 						}
 					} else {
 						List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
@@ -90,7 +91,8 @@ public class TreeUtil {
 		@Override
 		public Leaf next() {
 			next = currentLeafs.poll();
-			currentLeafs.remove(0);
+			// currentLeafs.removeFirst();
+			System.out.println();
 
 			return this.next;
 		}
