@@ -1,25 +1,43 @@
 package com.filocha.itemCreation;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ItemCreationServiceImpl implements ItemCreationService {
 
 	@Override
 	public boolean createItem(String name) {
-		System.out.println("item name: " + name);
 		String home = System.getProperty("user.home");
-		File temp = new File(home + "/walker");
+		String root = home + "/walker";
+		File temp = new File(root);
 		temp.mkdir();
 
-		String root = temp + "/" + name + "/";
-		File file = new File(root);
+		return createIfFolderNotExist(root, name);
+	}
 
-		// TODO check if name represents file or folder
-		file.mkdirs();
+	public boolean createIfFolderNotExist(String root, String name) {
+		String[] folders = name.split("/");
+		String newRoot = root;
 
-		if (file.exists()) {
-			return true;
+		for (String string : folders) {
+			File file = new File(newRoot + "/" + string);
+			if (!file.exists()) {
+				if (!string.contains(".")) {
+					file.mkdirs();
+					newRoot += "/" + string;
+				} else {
+					try {
+						file.createNewFile();
+					} catch (IOException e) {
+						e.printStackTrace();
+						return false;
+					}
+				}
+			}
 		}
-		return false;
+		return true;
 	}
 }
