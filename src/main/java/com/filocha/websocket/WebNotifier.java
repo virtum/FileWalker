@@ -46,10 +46,6 @@ public class WebNotifier {
 		TreeUtil util = new TreeUtil();
 		Iterable<Leaf> items = util.convert(root);
 
-		for (Leaf leaf : items) {
-			System.out.println(leaf.getName());
-		}
-
 		Observable<Leaf> observable = Observable.from(items);
 
 		Action1<Leaf> observer1 = s -> {

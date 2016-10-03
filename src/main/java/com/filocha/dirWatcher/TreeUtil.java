@@ -91,8 +91,6 @@ public class TreeUtil {
 		@Override
 		public Leaf next() {
 			next = currentLeafs.poll();
-			// currentLeafs.removeFirst();
-			System.out.println();
 
 			return this.next;
 		}
