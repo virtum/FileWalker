@@ -30,8 +30,13 @@ public class WebNotifier {
 		boolean recursive = true;
 		String home = System.getProperty("user.home");
 		String rootDir = home + "/walker/";
-		Path dir = Paths.get(rootDir);
 
+		File file = new File(rootDir);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		Path dir = Paths.get(rootDir);
 		WatchDir watcher = new WatchDir(dir, recursive);
 
 		watcher.createObservable().subscribe(o -> {

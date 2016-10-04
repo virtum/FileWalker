@@ -11,7 +11,6 @@ public class Application {
 	public static void main(String[] args) throws IOException {
 		// startSingleObserver();
 		SpringApplication.run(Application.class, args);
-
 	}
 
 	// public static void startSingleObserver() throws IOException {
