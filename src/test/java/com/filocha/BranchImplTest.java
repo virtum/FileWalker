@@ -289,4 +289,32 @@ public class BranchImplTest {
 		assertThat(leafs.size(), equalTo(4));
 	}
 
+	@Test
+	public void shouldFindLeafInSecondBranch() {
+		// given
+		BranchImpl root = new BranchImpl();
+
+		BranchImpl subBranch0 = new BranchImpl();
+		root.addChildBranch(subBranch0);
+
+		BranchImpl subBranch1 = new BranchImpl();
+		root.addChildBranch(subBranch1);
+
+		BranchImpl subBranch11 = new BranchImpl();
+		subBranch1.addChildBranch(subBranch11);
+
+		Leaf leaf111 = new LeafImpl();
+		subBranch11.addChildLeaf(leaf111);
+
+		// when
+		TreeUtil tree = new TreeUtil();
+		Iterable<Leaf> iterable = tree.convert(root);
+		Iterator<Leaf> iterator = iterable.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		// then
+		assertThat(leafs, containsInAnyOrder(leaf111));
+
+	}
+
 }

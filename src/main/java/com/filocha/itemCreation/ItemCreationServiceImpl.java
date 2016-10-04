@@ -11,7 +11,7 @@ public class ItemCreationServiceImpl implements ItemCreationService {
 	@Override
 	public boolean createItem(String name) {
 		String home = System.getProperty("user.home");
-		String root = home + "/walker";
+		String root = home + "/walker/";
 		File temp = new File(root);
 		temp.mkdir();
 
