@@ -28,7 +28,10 @@ public class WebNotifier {
 	@PostConstruct
 	public void notifyWithFolderTreeStructureChanges() {
 		boolean recursive = true;
-		Path dir = Paths.get("C:\\Temp\\");
+		String home = System.getProperty("user.home");
+		String rootDir = home + "/walker/";
+		Path dir = Paths.get(rootDir);
+
 		WatchDir watcher = new WatchDir(dir, recursive);
 
 		watcher.createObservable().subscribe(o -> {
