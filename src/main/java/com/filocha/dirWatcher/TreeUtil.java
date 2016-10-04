@@ -71,6 +71,10 @@ public class TreeUtil {
 								if (!subLeafs.isEmpty()) {
 									notFound = false;
 								}
+								if (subLeafs.isEmpty()
+										&& currentBranches.isEmpty()) {
+									return false;
+								}
 							}
 						}
 						currentLeafs.addAll(subLeafs);
