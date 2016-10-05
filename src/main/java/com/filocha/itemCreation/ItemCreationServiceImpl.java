@@ -24,17 +24,15 @@ public class ItemCreationServiceImpl implements ItemCreationService {
 
 		for (String string : folders) {
 			File file = new File(newRoot + "/" + string);
-			if (!file.exists()) {
-				if (!string.contains(".")) {
-					file.mkdirs();
-					newRoot += "/" + string;
-				} else {
-					try {
-						file.createNewFile();
-					} catch (IOException e) {
-						e.printStackTrace();
-						return false;
-					}
+			if (!string.contains(".")) {
+				file.mkdirs();
+				newRoot += "/" + string;
+			} else {
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+					return false;
 				}
 			}
 		}

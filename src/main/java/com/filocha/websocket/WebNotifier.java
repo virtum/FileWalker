@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filocha.dirWatcher.FileBranchAdapter;
@@ -18,6 +19,7 @@ import com.filocha.dirWatcher.WatchDir;
 
 import rx.Observable;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 @RestController
 public class WebNotifier {
@@ -39,12 +41,13 @@ public class WebNotifier {
 		Path dir = Paths.get(rootDir);
 		WatchDir watcher = new WatchDir(dir, recursive);
 
-		watcher.createObservable().subscribe(o -> {
+		watcher.createObservable().observeOn(Schedulers.io()).subscribe(o -> {
 			messagingTemplate.convertAndSend("/topic/greetings",
 					o.toFile().getName());
 		});
 	}
 
+	@CrossOrigin
 	@MessageMapping("/hello")
 	public void notifyWithFullFolderStructure() {
 		String home = System.getProperty("user.home");
@@ -60,6 +63,6 @@ public class WebNotifier {
 			messagingTemplate.convertAndSend("/topic/greetings", s.getName());
 		};
 
-		observable.subscribe(observer1);
+		observable.observeOn(Schedulers.io()).subscribe(observer1);
 	}
 }
