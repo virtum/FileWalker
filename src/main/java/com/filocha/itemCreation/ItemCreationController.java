@@ -19,4 +19,9 @@ public class ItemCreationController {
 			@RequestParam(required = false, value = "name") String name) {
 		return service.createItem(name);
 	}
+
+	@RequestMapping(value = "temp", method = RequestMethod.GET)
+	public String getTemp() {
+		return "Hi";
+	}
 }
