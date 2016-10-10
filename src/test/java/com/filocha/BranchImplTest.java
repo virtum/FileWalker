@@ -45,6 +45,7 @@ public class BranchImplTest {
 		assertThat(iterator.hasNext(), equalTo(true));
 		assertThat(iterator.next(), equalTo(leaf));
 	}
+
 	@Test
 	public void shouldReturnBranchWithTwoLeafs() {
 		// given
@@ -64,6 +65,7 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1));
 	}
+
 	@Test
 	public void shouldReturnBranchWithFourLeafsOneInAnotherBranch() {
 		// given
@@ -91,6 +93,7 @@ public class BranchImplTest {
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3));
 
 	}
+
 	@Test
 	public void shouldReturnBranchWithFiveLeafsFromTwoSubBranches() {
 		// given
@@ -125,6 +128,7 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3, leaf4));
 	}
+
 	@Test
 	public void shouldFindLeafsInBranches() {
 		// given
@@ -148,6 +152,7 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf));
 	}
+
 	@Test
 	public void shouldFindLeafsInOneSubBranchesBranch() {
 		BranchImpl root = new BranchImpl();
@@ -174,6 +179,7 @@ public class BranchImplTest {
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2));
 
 	}
+
 	@Test
 	public void shouldFindLeafsInSubBranches() {
 		// given
@@ -214,6 +220,7 @@ public class BranchImplTest {
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2, leaf3, leaf4));
 	}
+
 	@Test
 	public void shouldReturnEmptyListIfSubBranchDoNotHaveLeafs() {
 		BranchImpl root = new BranchImpl();
@@ -234,6 +241,7 @@ public class BranchImplTest {
 
 		assertThat(leafs.isEmpty(), equalTo(true));
 	}
+
 	@Test
 	public void shouldLeafFromSubBranchIfBranchDoNotHaveLeafs() {
 		BranchImpl root = new BranchImpl();
@@ -251,6 +259,7 @@ public class BranchImplTest {
 
 		assertThat(leafs.isEmpty(), equalTo(true));
 	}
+
 	@Test
 	public void shouldFindFilesInSubBranches() {
 		BranchImpl root = new BranchImpl();
@@ -314,6 +323,27 @@ public class BranchImplTest {
 
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf111));
+
+	}
+
+	@Test
+	public void nextShouldWorkWithoutHasnext() {
+
+		// given
+		BranchImpl root = new BranchImpl();
+		BranchImpl branchOne = new BranchImpl();
+		BranchImpl branchTwo = new BranchImpl();
+		root.addChildBranch(branchOne);
+		branchOne.addChildBranch(branchTwo);
+		Leaf leafOne = new LeafImpl();
+		branchTwo.addChildLeaf(leafOne);
+
+		// when
+		Iterable<Leaf> leafIterable = new TreeUtil().convert(root);
+		Iterator<Leaf> leafIterator = leafIterable.iterator();
+
+		// then
+		assertThat(leafIterator.next(), equalTo(leafOne));
 
 	}
 

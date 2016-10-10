@@ -37,47 +37,46 @@ public class TreeUtil {
 
 		@Override
 		public boolean hasNext() {
-			if (currentLeafs.isEmpty() && currentBranches.isEmpty()) {
-				return false;
-			}
-			if (currentBranches.isEmpty()) {
+			if (!currentLeafs.isEmpty()) {
 				return true;
 			}
 
-			if (currentLeafs.isEmpty()) {
-				Branch branch = currentBranches.poll();
-				Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
+			if (currentLeafs.isEmpty() && currentBranches.isEmpty()) {
+				return false;
+			}
 
-				if (!leafs.isEmpty()) {
-					if (branch.getChildBranches().isEmpty()) {
-						currentLeafs.addAll(leafs);
-						currentBranches.remove(branch);
-					} else {
-						currentLeafs.addAll(leafs);
-						leafs.clear();
-						currentBranches.addAll(0, branch.getChildBranches());
-					}
+			Branch branch = currentBranches.poll();
+			Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
+
+			if (!leafs.isEmpty()) {
+				if (branch.getChildBranches().isEmpty()) {
+					currentLeafs.addAll(leafs);
+					currentBranches.remove(branch);
 				} else {
-					List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
-					if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
-						return false;
-					} else if (subLeafs.isEmpty() && !currentBranches.isEmpty()) {
-						boolean notFound = true;
+					currentLeafs.addAll(leafs);
+					leafs.clear();
+					currentBranches.addAll(0, branch.getChildBranches());
+				}
+			} else {
+				List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
+				if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
+					return false;
+				} else if (subLeafs.isEmpty() && !currentBranches.isEmpty()) {
+					boolean notFound = true;
 
-						while (notFound) {
-							branch = currentBranches.poll();
-							subLeafs = getLeafsFromSubBranches(branch);
+					while (notFound) {
+						branch = currentBranches.poll();
+						subLeafs = getLeafsFromSubBranches(branch);
 
-							if (!subLeafs.isEmpty()) {
-								notFound = false;
-							}
-							if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
-								return false;
-							}
+						if (!subLeafs.isEmpty()) {
+							notFound = false;
+						}
+						if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
+							return false;
 						}
 					}
-					currentLeafs.addAll(subLeafs);
 				}
+				currentLeafs.addAll(subLeafs);
 			}
 			return true;
 		}
