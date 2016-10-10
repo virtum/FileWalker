@@ -3,17 +3,18 @@ package com.filocha;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.concurrent.ExecutionException;
+import java.io.File;
+import java.io.IOException;
 
-import org.junit.Ignore;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestClientException;
 
 import com.filocha.itemCreation.ItemCreationService;
 import com.filocha.itemCreation.ItemCreationServiceImpl;
@@ -24,6 +25,8 @@ public class ItemCreationTest {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
+	@Value("${local.server.port}")
+	private String port;
 
 	@Test
 	public void shouldCreateFolder() {
@@ -35,19 +38,19 @@ public class ItemCreationTest {
 		assertThat(result, equalTo(true));
 	}
 
-	@Ignore
 	@Test
-	public void shouldReceiveHttpGet() throws RestClientException,
-			InterruptedException, ExecutionException {
-		String result1 = restTemplate
-				.getForEntity("http://localhost:8080/temp", String.class)
-				.getBody();
+	public void shouldReceiveHttpGet() throws IOException {
+		String folderToCreate = "12345";
+		restTemplate.getForObject("http://localhost:" + port + "/addItem?name=" + folderToCreate, String.class);
 
-		String result = restTemplate.getForObject("http://localhost:8080/temp",
-				String.class);
+		String home = System.getProperty("user.home");
+		String root = home + "/walker/";
+		File temp = new File(root + folderToCreate);
 
-		System.out.println(result);
-		System.out.println(result1);
+		assertThat(temp.exists(), equalTo(true));
+
+		FileUtils.deleteDirectory(temp);
+
 	}
 
 }

@@ -15,13 +15,7 @@ public class ItemCreationController {
 
 	@CrossOrigin
 	@RequestMapping(value = "addItem", method = RequestMethod.GET)
-	public boolean getItemName(
-			@RequestParam(required = false, value = "name") String name) {
+	public boolean getItemName(@RequestParam(required = false, value = "name") String name) {
 		return service.createItem(name);
-	}
-
-	@RequestMapping(value = "temp", method = RequestMethod.GET)
-	public String getTemp() {
-		return "Hi";
 	}
 }
