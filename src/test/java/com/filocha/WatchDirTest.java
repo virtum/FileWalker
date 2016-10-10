@@ -42,6 +42,6 @@ public class WatchDirTest {
 		assertThat(file.exists(), equalTo(true));
 		assertThat(result.toFile().getName(), equalTo(file.getName()));
 
-		FileUtils.deleteDirectory(temp);
+		FileUtils.deleteDirectory(file);
 	}
 }
