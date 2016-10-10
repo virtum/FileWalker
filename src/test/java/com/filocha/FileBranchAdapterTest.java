@@ -20,7 +20,7 @@ public class FileBranchAdapterTest {
 	@Test
 	public void shouldFindSubBranches() throws IOException {
 
-		String home = System.getProperty("user.home");
+		String home = System.getProperty("java.io.tmpdir");
 		String randomName = UUID.randomUUID().toString().substring(28);
 		String root = home + "\\" + randomName + "\\";
 

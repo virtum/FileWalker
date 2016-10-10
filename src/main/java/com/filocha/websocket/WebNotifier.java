@@ -30,7 +30,7 @@ public class WebNotifier {
 	@PostConstruct
 	public void notifyWithFolderTreeStructureChanges() {
 		boolean recursive = true;
-		String home = System.getProperty("user.home");
+		String home = System.getProperty("java.io.tmpdir");
 		String rootDir = home + "/walker/";
 
 		File file = new File(rootDir);
@@ -42,15 +42,14 @@ public class WebNotifier {
 		WatchDir watcher = new WatchDir(dir, recursive);
 
 		watcher.createObservable().observeOn(Schedulers.io()).subscribe(o -> {
-			messagingTemplate.convertAndSend("/topic/greetings",
-					o.toFile().getName());
+			messagingTemplate.convertAndSend("/topic/greetings", o.toFile().getName());
 		});
 	}
 
 	@CrossOrigin
 	@MessageMapping("/hello")
 	public void notifyWithFullFolderStructure() {
-		String home = System.getProperty("user.home");
+		String home = System.getProperty("java.io.tmpdir");
 		String rootDir = home + "/walker/";
 		FileBranchAdapter root = new FileBranchAdapter(new File(rootDir));
 

@@ -43,7 +43,7 @@ public class ItemCreationTest {
 		String folderToCreate = "12345";
 		restTemplate.getForObject("http://localhost:" + port + "/addItem?name=" + folderToCreate, String.class);
 
-		String home = System.getProperty("user.home");
+		String home = System.getProperty("java.io.tmpdir");
 		String root = home + "/walker/";
 		File temp = new File(root + folderToCreate);
 

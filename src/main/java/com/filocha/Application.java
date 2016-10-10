@@ -2,7 +2,6 @@ package com.filocha;
 
 import java.io.IOException;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
@@ -10,7 +9,8 @@ public class Application {
 
 	public static void main(String[] args) throws IOException {
 		// startSingleObserver();
-		SpringApplication.run(Application.class, args);
+		// SpringApplication.run(Application.class, args);
+		System.out.println("OS current temporary directory is " + System.getProperty("java.io.tmpdir"));
 	}
 
 	// public static void startSingleObserver() throws IOException {

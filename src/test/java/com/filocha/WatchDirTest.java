@@ -20,7 +20,7 @@ public class WatchDirTest {
 
 	@Test
 	public void shouldReceiveChangesInFolders() throws IOException {
-		String home = System.getProperty("user.home");
+		String home = System.getProperty("java.io.tmpdir");
 		File temp = new File(home + "/Temp");
 		temp.mkdir();
 
