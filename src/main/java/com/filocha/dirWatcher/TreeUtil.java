@@ -3,6 +3,7 @@ package com.filocha.dirWatcher;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 public class TreeUtil {
@@ -46,6 +47,9 @@ public class TreeUtil {
 
 			if (currentLeafs.isEmpty()) {
 				findSubLeasfAndAddToList();
+			}
+			if (next == null) {
+				throw new NoSuchElementException();
 			}
 			return next;
 		}

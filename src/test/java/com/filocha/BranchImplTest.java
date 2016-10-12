@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -461,6 +462,20 @@ public class BranchImplTest {
 
 		// then
 		assertThat(leafs, containsInAnyOrder(leaf1, leaf2));
+	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void shoudlThrowExceptionWhenThereIsNoElementLeft() {
+		// given
+		BranchImpl root = new BranchImpl("root");
+
+		// when
+		TreeUtil tree = new TreeUtil();
+		Iterable<Leaf> iterable = tree.convert(root);
+		Iterator<Leaf> iterator = iterable.iterator();
+
+		// then
+		assertThat(iterator.next(), equalTo(null));
 	}
 
 }
