@@ -475,7 +475,7 @@ public class BranchImplTest {
 		Iterator<Leaf> iterator = iterable.iterator();
 
 		// then
-		assertThat(iterator.next(), equalTo(null));
+		iterator.next();
 	}
 
 }

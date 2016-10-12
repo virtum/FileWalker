@@ -33,7 +33,7 @@ public class TreeUtil {
 		public LeafIterator(Branch branch) {
 			this.currentLeafs = new LinkedList<>(branch.getChildLeafs());
 			this.currentBranches = new LinkedList<>(branch.getChildBranches());
-			findSubLeasfAndAddToList();
+			findSubLeafsAndAddToList();
 		}
 
 		@Override
@@ -46,7 +46,7 @@ public class TreeUtil {
 			next = currentLeafs.poll();
 
 			if (currentLeafs.isEmpty()) {
-				findSubLeasfAndAddToList();
+				findSubLeafsAndAddToList();
 			}
 			if (next == null) {
 				throw new NoSuchElementException();
@@ -54,38 +54,19 @@ public class TreeUtil {
 			return next;
 		}
 
-		public void findSubLeasfAndAddToList() {
-			if (!currentBranches.isEmpty()) {
-				Branch branch = currentBranches.poll();
-				Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
-				if (!leafs.isEmpty()) {
-					if (branch.getChildBranches().isEmpty()) {
-						currentLeafs.addAll(leafs);
-						currentBranches.remove(branch);
-					} else {
-						currentLeafs.addAll(leafs);
-						currentBranches.addAll(0, branch.getChildBranches());
-					}
-				} else {
-					currentBranches.addAll(0, branch.getChildBranches());
-					while (true) {
-						branch = currentBranches.poll();
-						if (branch == null) {
-							break;
-						}
-						List<Branch> branches = branch.getChildBranches();
-						List<Leaf> subLeafs = branch.getChildLeafs();
-						if (!subLeafs.isEmpty()) {
-							currentLeafs.addAll(subLeafs);
-							currentBranches.addAll(0, branches);
-							break;
-						}
-						currentBranches.addAll(0, branches);
-						if (currentBranches.isEmpty()) {
-							break;
-						}
-					}
+		public void findSubLeafsAndAddToList() {
+			while (true) {
+				if (!currentLeafs.isEmpty()) {
+					return;
 				}
+
+				if (currentBranches.isEmpty()) {
+					return;
+				}
+
+				Branch branch = currentBranches.poll();
+				currentLeafs.addAll(branch.getChildLeafs());
+				currentBranches.addAll(0, branch.getChildBranches());
 			}
 		}
 	}
