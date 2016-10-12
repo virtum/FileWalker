@@ -68,19 +68,40 @@ public class TreeUtil {
 							currentBranches.addAll(0, branch.getChildBranches());
 						}
 					} else {
-						List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
-						if (subLeafs.isEmpty() && !currentBranches.isEmpty()) {
-							boolean notFound = true;
-							while (notFound) {
-								branch = currentBranches.poll();
-								subLeafs = getLeafsFromSubBranches(branch);
+						currentBranches.addAll(0, branch.getChildBranches());
+						while (true) {
+							branch = currentBranches.poll();
 
-								if (!subLeafs.isEmpty()) {
-									notFound = false;
-								}
+							List<Branch> branches = branch.getChildBranches();
+							List<Leaf> subLeafs = branch.getChildLeafs();
+							if (!subLeafs.isEmpty()) {
+								currentLeafs.addAll(subLeafs);
+								currentBranches.addAll(0, branches);
+								break;
+							}
+							if (subLeafs.isEmpty()) {
+								currentBranches.addAll(0, branches);
+							}
+							if (branches.isEmpty()) {
+								break;
 							}
 						}
-						currentLeafs.addAll(subLeafs);
+						//
+						// List<Leaf> subLeafs =
+						// getLeafsFromSubBranches(branch);
+						// if (subLeafs.isEmpty() && !currentBranches.isEmpty())
+						// {
+						// boolean notFound = true;
+						// while (notFound) {
+						// branch = currentBranches.poll();
+						// subLeafs = getLeafsFromSubBranches(branch);
+						//
+						// if (!subLeafs.isEmpty()) {
+						// notFound = false;
+						// }
+						// }
+						// }
+						// currentLeafs.addAll(subLeafs);
 					}
 				}
 			}

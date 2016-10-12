@@ -373,23 +373,18 @@ public class BranchImplTest {
 	@Test
 	public void shoudlFindLeafInAnotherCombination2() {
 		BranchImpl root = new BranchImpl("root");
-
 		BranchImpl branch1 = new BranchImpl("branch1");
-		root.addChildBranch(branch1);
-
 		BranchImpl branch2 = new BranchImpl("branch2");
-		root.addChildBranch(branch2);
-
-		LeafImpl leaf = new LeafImpl("leaf");
-		branch2.addChildLeaf(leaf);
-
 		BranchImpl branch3 = new BranchImpl("branch3");
-		branch1.addChildBranch(branch3);
-
 		BranchImpl branch4 = new BranchImpl("branch4");
-		branch1.addChildBranch(branch4);
-
+		LeafImpl leaf = new LeafImpl("leaf");
 		LeafImpl leaf1 = new LeafImpl("leaf");
+
+		root.addChildBranch(branch1);
+		root.addChildBranch(branch2);
+		branch1.addChildBranch(branch3);
+		branch1.addChildBranch(branch4);
+		branch2.addChildLeaf(leaf);
 		branch4.addChildLeaf(leaf1);
 
 		// when
