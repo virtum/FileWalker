@@ -1,6 +1,7 @@
 package com.filocha.dirWatcher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,23 +86,34 @@ public class TreeUtil {
 			}
 		}
 
-		private List<Leaf> getLeafsFromSubBranches(Branch branch) {
+		private static List<Leaf> getLeafsFromSubBranches(Branch branch) {
 			List<Leaf> result = new ArrayList<>();
+			result = branch.getChildLeafs();
+
+			if (!result.isEmpty()) {
+				return result;
+			}
 
 			List<Branch> branches = branch.getChildBranches();
 			for (Branch subBranch : branches) {
+
 				if (subBranch.getChildLeafs().isEmpty()) {
 					if (subBranch.getChildBranches().isEmpty()) {
-						return result;
+						return Collections.<Leaf>emptyList();
 					}
+				}
+
+				if (subBranch.getChildLeafs().isEmpty()) {
 					getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
-				} else {
-					result.addAll(subBranch.getChildLeafs());
-					subBranch.getChildLeafs().clear();
 					return result;
 				}
+
+				result.addAll(subBranch.getChildLeafs());
+				subBranch.getChildLeafs().clear();
+				return result;
 			}
-			return result;
+			return Collections.<Leaf>emptyList();
 		}
+
 	}
 }

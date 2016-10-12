@@ -347,4 +347,27 @@ public class BranchImplTest {
 
 	}
 
+	@Test
+	public void shoudlFindLeafInAnotherCombination() {
+		BranchImpl root = new BranchImpl();
+
+		BranchImpl branch1 = new BranchImpl();
+		root.addChildBranch(branch1);
+
+		BranchImpl branch2 = new BranchImpl();
+		root.addChildBranch(branch2);
+
+		LeafImpl leaf = new LeafImpl();
+		branch2.addChildLeaf(leaf);
+
+		// when
+		TreeUtil tree = new TreeUtil();
+		Iterable<Leaf> iterable = tree.convert(root);
+		Iterator<Leaf> iterator = iterable.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		// then
+		assertThat(leafs, containsInAnyOrder(leaf));
+	}
+
 }
