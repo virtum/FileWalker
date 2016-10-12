@@ -51,36 +51,34 @@ public class TreeUtil {
 		}
 
 		public void findSubLeasfAndAddToList() {
-			if (currentLeafs.isEmpty()) {
-				if (!currentBranches.isEmpty()) {
-					Branch branch = currentBranches.poll();
-					Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
-					if (!leafs.isEmpty()) {
-						if (branch.getChildBranches().isEmpty()) {
-							currentLeafs.addAll(leafs);
-							currentBranches.remove(branch);
-						} else {
-							currentLeafs.addAll(leafs);
-							currentBranches.addAll(0, branch.getChildBranches());
-						}
+			if (!currentBranches.isEmpty()) {
+				Branch branch = currentBranches.poll();
+				Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
+				if (!leafs.isEmpty()) {
+					if (branch.getChildBranches().isEmpty()) {
+						currentLeafs.addAll(leafs);
+						currentBranches.remove(branch);
 					} else {
+						currentLeafs.addAll(leafs);
 						currentBranches.addAll(0, branch.getChildBranches());
-						while (true) {
-							branch = currentBranches.poll();
-							if (branch == null) {
-								break;
-							}
-							List<Branch> branches = branch.getChildBranches();
-							List<Leaf> subLeafs = branch.getChildLeafs();
-							if (!subLeafs.isEmpty()) {
-								currentLeafs.addAll(subLeafs);
-								currentBranches.addAll(0, branches);
-								break;
-							}
+					}
+				} else {
+					currentBranches.addAll(0, branch.getChildBranches());
+					while (true) {
+						branch = currentBranches.poll();
+						if (branch == null) {
+							break;
+						}
+						List<Branch> branches = branch.getChildBranches();
+						List<Leaf> subLeafs = branch.getChildLeafs();
+						if (!subLeafs.isEmpty()) {
+							currentLeafs.addAll(subLeafs);
 							currentBranches.addAll(0, branches);
-							if (currentBranches.isEmpty()) {
-								break;
-							}
+							break;
+						}
+						currentBranches.addAll(0, branches);
+						if (currentBranches.isEmpty()) {
+							break;
 						}
 					}
 				}
