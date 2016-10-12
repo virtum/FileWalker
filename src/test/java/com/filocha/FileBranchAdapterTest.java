@@ -22,7 +22,7 @@ public class FileBranchAdapterTest {
 
 		String home = System.getProperty("java.io.tmpdir");
 		String randomName = UUID.randomUUID().toString().substring(28);
-		String root = home + "\\" + randomName + "\\";
+		String root = home + randomName + "\\";
 
 		File rootFile = new File(root);
 		rootFile.mkdirs();
@@ -44,6 +44,8 @@ public class FileBranchAdapterTest {
 		assertThat(leafs.get(0).getName(), equalTo("1.txt"));
 		assertThat(branches.size(), equalTo(2));
 		assertThat(leafs.size(), equalTo(5));
+
+		System.out.println(root);
 
 		FileUtils.deleteDirectory(rootFile);
 	}

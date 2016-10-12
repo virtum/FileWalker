@@ -59,7 +59,6 @@ public class WebNotifier {
 		Observable<Leaf> observable = Observable.from(items);
 
 		Action1<Leaf> observer1 = s -> {
-			System.out.println("Change: " + s.getName());
 			messagingTemplate.convertAndSend("/topic/greetings", s.getName());
 		};
 
