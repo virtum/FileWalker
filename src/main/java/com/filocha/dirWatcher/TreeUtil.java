@@ -55,14 +55,12 @@ public class TreeUtil {
 				if (!currentBranches.isEmpty()) {
 					Branch branch = currentBranches.poll();
 					Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
-
 					if (!leafs.isEmpty()) {
 						if (branch.getChildBranches().isEmpty()) {
 							currentLeafs.addAll(leafs);
 							currentBranches.remove(branch);
 						} else {
 							currentLeafs.addAll(leafs);
-							leafs.clear();
 							currentBranches.addAll(0, branch.getChildBranches());
 						}
 					} else {
@@ -72,7 +70,6 @@ public class TreeUtil {
 							if (branch == null) {
 								break;
 							}
-
 							List<Branch> branches = branch.getChildBranches();
 							List<Leaf> subLeafs = branch.getChildLeafs();
 							if (!subLeafs.isEmpty()) {
