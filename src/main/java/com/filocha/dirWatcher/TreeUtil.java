@@ -82,7 +82,7 @@ public class TreeUtil {
 							if (subLeafs.isEmpty()) {
 								currentBranches.addAll(0, branches);
 							}
-							if (branches.isEmpty()) {
+							if (currentBranches.isEmpty()) {
 								break;
 							}
 						}
