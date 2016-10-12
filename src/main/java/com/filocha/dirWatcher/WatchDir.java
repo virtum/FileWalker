@@ -122,7 +122,7 @@ public class WatchDir {
 		Path dir = keys.get(key);
 
 		for (WatchEvent<?> event : key.pollEvents()) {
-			WatchEvent.Kind kind = event.kind();
+			WatchEvent.Kind<?> kind = event.kind();
 
 			// Context for directory entry event is the file name of entry
 			WatchEvent<Path> ev = cast(event);

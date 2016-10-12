@@ -8,6 +8,16 @@ import com.filocha.dirWatcher.Leaf;
 
 public class BranchImpl implements Branch {
 
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public BranchImpl(String name) {
+		this.name = name;
+	}
+
 	private List<Branch> childBranches = new ArrayList<>();
 	private List<Leaf> childLeafs = new ArrayList<>();
 

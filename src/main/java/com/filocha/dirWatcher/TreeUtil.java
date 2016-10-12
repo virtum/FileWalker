@@ -86,7 +86,7 @@ public class TreeUtil {
 			}
 		}
 
-		private static List<Leaf> getLeafsFromSubBranches(Branch branch) {
+		private List<Leaf> getLeafsFromSubBranches(Branch branch) {
 			List<Leaf> result = new ArrayList<>();
 			result = branch.getChildLeafs();
 
@@ -94,25 +94,26 @@ public class TreeUtil {
 				return result;
 			}
 
-			List<Branch> branches = branch.getChildBranches();
-			for (Branch subBranch : branches) {
+			currentBranches.addAll(0, branch.getChildBranches());
+			Branch subBranch = currentBranches.poll();
 
-				if (subBranch.getChildLeafs().isEmpty()) {
-					if (subBranch.getChildBranches().isEmpty()) {
-						return Collections.<Leaf>emptyList();
-					}
+			if (subBranch == null) {
+				return Collections.<Leaf>emptyList();
+			}
+			if (subBranch.getChildLeafs().isEmpty()) {
+				if (subBranch.getChildBranches().isEmpty()) {
+					return Collections.<Leaf>emptyList();
 				}
+			}
 
-				if (subBranch.getChildLeafs().isEmpty()) {
-					getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
-					return result;
-				}
-
-				result.addAll(subBranch.getChildLeafs());
-				subBranch.getChildLeafs().clear();
+			if (subBranch.getChildLeafs().isEmpty()) {
+				getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
 				return result;
 			}
-			return Collections.<Leaf>emptyList();
+
+			result.addAll(subBranch.getChildLeafs());
+			subBranch.getChildLeafs().clear();
+			return result;
 		}
 
 	}
