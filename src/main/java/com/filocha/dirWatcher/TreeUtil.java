@@ -107,7 +107,7 @@ public class TreeUtil {
 			}
 
 			if (subBranch.getChildLeafs().isEmpty()) {
-				getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
+				result = getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
 				return result;
 			}
 
