@@ -58,20 +58,14 @@ public class TreeUtil {
 						}
 					} else {
 						List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
-						if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
-
-						} else if (subLeafs.isEmpty() && !currentBranches.isEmpty()) {
+						if (subLeafs.isEmpty() && !currentBranches.isEmpty()) {
 							boolean notFound = true;
-
 							while (notFound) {
 								branch = currentBranches.poll();
 								subLeafs = getLeafsFromSubBranches(branch);
 
 								if (!subLeafs.isEmpty()) {
 									notFound = false;
-								}
-								if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
-
 								}
 							}
 						}
