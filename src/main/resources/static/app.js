@@ -19,7 +19,6 @@ function connect() {
 			showGreeting(greeting.body);
 		});
 		setConnected(true);
-		console.log('Connected: ' + frame);
 		sendName();
 	});
 }
@@ -29,7 +28,6 @@ function disconnect() {
 		stompClient.disconnect();
 	}
 	setConnected(false);
-	console.log("Disconnected");
 }
 
 function sendName() {
