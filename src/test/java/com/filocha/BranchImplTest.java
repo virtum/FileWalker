@@ -402,4 +402,42 @@ public class BranchImplTest {
 		assertThat(leafs, containsInAnyOrder(leaf, leaf1));
 	}
 
+	@Test
+	public void shoudlFindLeafInAnotherCombination3() {
+		BranchImpl root = new BranchImpl("root");
+
+		BranchImpl branch1 = new BranchImpl("branch1");
+		root.addChildBranch(branch1);
+
+		BranchImpl branch2 = new BranchImpl("branch2");
+		root.addChildBranch(branch2);
+
+		LeafImpl leaf = new LeafImpl("leaf");
+		branch2.addChildLeaf(leaf);
+
+		BranchImpl branch3 = new BranchImpl("branch3");
+		branch1.addChildBranch(branch3);
+
+		BranchImpl branch4 = new BranchImpl("branch4");
+		branch1.addChildBranch(branch4);
+
+		LeafImpl leaf1 = new LeafImpl("leaf1");
+		branch4.addChildLeaf(leaf1);
+
+		BranchImpl branch5 = new BranchImpl("branch5");
+		branch4.addChildBranch(branch5);
+
+		LeafImpl leaf2 = new LeafImpl("leaf2");
+		branch5.addChildLeaf(leaf2);
+
+		// when
+		TreeUtil tree = new TreeUtil();
+		Iterable<Leaf> iterable = tree.convert(root);
+		Iterator<Leaf> iterator = iterable.iterator();
+		List<Leaf> leafs = Lists.newArrayList(iterator);
+
+		// then
+		assertThat(leafs, containsInAnyOrder(leaf, leaf1, leaf2));
+	}
+
 }
