@@ -136,12 +136,12 @@ public class BranchImplTest {
 		BranchImpl subBranch1 = new BranchImpl("subBranch1");
 		BranchImpl subBranch2 = new BranchImpl("subBranch2");
 		BranchImpl subBranch3 = new BranchImpl("subBranch3");
+		Leaf leaf = new LeafImpl("leaf");
 
 		root.addChildBranch(subBranch1);
-		subBranch1.addChildBranch(subBranch2);
-		Leaf leaf = new LeafImpl("leaf");
-		subBranch2.addChildLeaf(leaf);
 		root.addChildBranch(subBranch3);
+		subBranch1.addChildBranch(subBranch2);
+		subBranch2.addChildLeaf(leaf);
 
 		// when
 		TreeUtil util = new TreeUtil();

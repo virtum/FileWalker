@@ -71,6 +71,9 @@ public class TreeUtil {
 						currentBranches.addAll(0, branch.getChildBranches());
 						while (true) {
 							branch = currentBranches.poll();
+							if (branch == null) {
+								break;
+							}
 
 							List<Branch> branches = branch.getChildBranches();
 							List<Leaf> subLeafs = branch.getChildLeafs();
@@ -86,55 +89,9 @@ public class TreeUtil {
 								break;
 							}
 						}
-						//
-						// List<Leaf> subLeafs =
-						// getLeafsFromSubBranches(branch);
-						// if (subLeafs.isEmpty() && !currentBranches.isEmpty())
-						// {
-						// boolean notFound = true;
-						// while (notFound) {
-						// branch = currentBranches.poll();
-						// subLeafs = getLeafsFromSubBranches(branch);
-						//
-						// if (!subLeafs.isEmpty()) {
-						// notFound = false;
-						// }
-						// }
-						// }
-						// currentLeafs.addAll(subLeafs);
 					}
 				}
 			}
 		}
-
-		private List<Leaf> getLeafsFromSubBranches(Branch branch) {
-			List<Leaf> result = new ArrayList<>();
-			result = branch.getChildLeafs();
-
-			if (!result.isEmpty()) {
-				return result;
-			}
-
-			currentBranches.addAll(0, branch.getChildBranches());
-			Branch subBranch = currentBranches.poll();
-
-			if (subBranch == null) {
-				return Collections.<Leaf>emptyList();
-			}
-			if (subBranch.getChildLeafs().isEmpty()) {
-				if (subBranch.getChildBranches().isEmpty()) {
-					return Collections.<Leaf>emptyList();
-				}
-			}
-
-			if (subBranch.getChildLeafs().isEmpty()) {
-				return getLeafsFromSubBranches(subBranch.getChildBranches().get(0));
-			}
-
-			result.addAll(subBranch.getChildLeafs());
-			subBranch.getChildLeafs().clear();
-			return result;
-		}
-
 	}
 }
