@@ -7,7 +7,6 @@ import static org.junit.Assert.assertThat;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.filocha.dirWatcher.Leaf;
@@ -327,7 +326,6 @@ public class BranchImplTest {
 
 	}
 
-	@Ignore
 	@Test
 	public void nextShouldWorkWithoutHasnext() {
 

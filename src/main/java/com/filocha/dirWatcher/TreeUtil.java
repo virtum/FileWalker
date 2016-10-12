@@ -33,52 +33,52 @@ public class TreeUtil {
 		public LeafIterator(Branch branch) {
 			this.currentLeafs = new LinkedList<>(branch.getChildLeafs());
 			this.currentBranches = new LinkedList<>(branch.getChildBranches());
+			findSubLeasfAndAddToList();
 		}
 
 		@Override
 		public boolean hasNext() {
-			if (!currentLeafs.isEmpty()) {
-				return true;
-			}
+			return !currentLeafs.isEmpty();
+		}
 
-			if (currentLeafs.isEmpty() && currentBranches.isEmpty()) {
-				return false;
-			}
+		public void findSubLeasfAndAddToList() {
+			if (currentLeafs.isEmpty()) {
+				if (!currentBranches.isEmpty()) {
+					Branch branch = currentBranches.poll();
+					Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
 
-			Branch branch = currentBranches.poll();
-			Queue<Leaf> leafs = new LinkedList<>(branch.getChildLeafs());
-
-			if (!leafs.isEmpty()) {
-				if (branch.getChildBranches().isEmpty()) {
-					currentLeafs.addAll(leafs);
-					currentBranches.remove(branch);
-				} else {
-					currentLeafs.addAll(leafs);
-					leafs.clear();
-					currentBranches.addAll(0, branch.getChildBranches());
-				}
-			} else {
-				List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
-				if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
-					return false;
-				} else if (subLeafs.isEmpty() && !currentBranches.isEmpty()) {
-					boolean notFound = true;
-
-					while (notFound) {
-						branch = currentBranches.poll();
-						subLeafs = getLeafsFromSubBranches(branch);
-
-						if (!subLeafs.isEmpty()) {
-							notFound = false;
+					if (!leafs.isEmpty()) {
+						if (branch.getChildBranches().isEmpty()) {
+							currentLeafs.addAll(leafs);
+							currentBranches.remove(branch);
+						} else {
+							currentLeafs.addAll(leafs);
+							leafs.clear();
+							currentBranches.addAll(0, branch.getChildBranches());
 						}
+					} else {
+						List<Leaf> subLeafs = getLeafsFromSubBranches(branch);
 						if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
-							return false;
+
+						} else if (subLeafs.isEmpty() && !currentBranches.isEmpty()) {
+							boolean notFound = true;
+
+							while (notFound) {
+								branch = currentBranches.poll();
+								subLeafs = getLeafsFromSubBranches(branch);
+
+								if (!subLeafs.isEmpty()) {
+									notFound = false;
+								}
+								if (subLeafs.isEmpty() && currentBranches.isEmpty()) {
+
+								}
+							}
 						}
+						currentLeafs.addAll(subLeafs);
 					}
 				}
-				currentLeafs.addAll(subLeafs);
 			}
-			return true;
 		}
 
 		private List<Leaf> getLeafsFromSubBranches(Branch branch) {
@@ -104,7 +104,10 @@ public class TreeUtil {
 		public Leaf next() {
 			next = currentLeafs.poll();
 
-			return this.next;
+			if (currentLeafs.isEmpty()) {
+				findSubLeasfAndAddToList();
+			}
+			return next;
 		}
 	}
 }
