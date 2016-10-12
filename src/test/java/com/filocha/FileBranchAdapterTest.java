@@ -45,8 +45,6 @@ public class FileBranchAdapterTest {
 		assertThat(branches.size(), equalTo(2));
 		assertThat(leafs.size(), equalTo(5));
 
-		System.out.println(root);
-
 		FileUtils.deleteDirectory(rootFile);
 	}
 
