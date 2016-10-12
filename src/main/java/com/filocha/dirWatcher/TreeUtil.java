@@ -41,6 +41,16 @@ public class TreeUtil {
 			return !currentLeafs.isEmpty();
 		}
 
+		@Override
+		public Leaf next() {
+			next = currentLeafs.poll();
+
+			if (currentLeafs.isEmpty()) {
+				findSubLeasfAndAddToList();
+			}
+			return next;
+		}
+
 		public void findSubLeasfAndAddToList() {
 			if (currentLeafs.isEmpty()) {
 				if (!currentBranches.isEmpty()) {
@@ -92,16 +102,6 @@ public class TreeUtil {
 				}
 			}
 			return result;
-		}
-
-		@Override
-		public Leaf next() {
-			next = currentLeafs.poll();
-
-			if (currentLeafs.isEmpty()) {
-				findSubLeasfAndAddToList();
-			}
-			return next;
 		}
 	}
 }
